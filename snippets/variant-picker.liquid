@@ -140,7 +140,7 @@ Supported variables
 
       {%- capture select_options -%}
         {%- for variant in product.variants -%}
-          <option {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %} {% unless variant.available %}disabled="disabled"{% endunless %} value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>
+          <option {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %} {%- if variant.inventory_policy == 'deny' and variant.inventory_quantity <= 3 -%}disabled="disabled"{% endif %} value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>
         {%- endfor -%}
       {%- endcapture -%}
 

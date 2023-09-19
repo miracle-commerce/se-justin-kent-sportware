@@ -25,9 +25,14 @@ Supported variables
     {%- for variant in product.variants -%}
       {%- liquid
         if variant.available
-          if variant.inventory_management and variant.inventory_policy == 'deny' and variant.inventory_quantity <= low_threshold and low_threshold > 0
+          if variant.inventory_management and variant.inventory_policy == 'deny' and variant.inventory_quantity <= 3
+            comment
             assign inventory_status = 'warning'
             assign inventory_text = 'product.inventory.low_stock_with_quantity_count' | t: count: variant.inventory_quantity
+            endcomment
+            assign inventory_status = 'error'
+            assign inventory_text = 'product.inventory.out_of_stock' | t
+
           else
             if variant.inventory_policy == 'continue' and variant.inventory_quantity <= 0 and variant.requires_shipping
               if variant.incoming and variant.next_incoming_date

@@ -27,8 +27,7 @@ Supported variables
 
     {% liquid
       assign button_disabled = false
-
-      if product.selected_or_first_available_variant.available == false
+      if product.selected_or_first_available_variant.inventory_quantity <= 3 and product.selected_or_first_available_variant.inventory_policy == "deny"
         assign button_disabled = true
         assign button_content = 'product.general.sold_out_button' | t
       else

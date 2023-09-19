@@ -3811,6 +3811,17 @@ getSelectedOptionValues_fn = function() {
 };
 _updateDisableSelectors = new WeakSet();
 updateDisableSelectors_fn = function() {
+
+  if(document.getElementById("VariantsInventoryData") && document.getElementById("VariantsInventoryData").innerText){
+    let variantsInventoryData = JSON.parse(document.getElementById("VariantsInventoryData").innerText);
+    this.product.variants.forEach((variant)=>{
+      variantsInventoryData.forEach((inventoryData) => {
+        if(inventoryData.id === variant.id && inventoryData.inventory_policy == "deny" && inventoryData.inventory_quantity <= 3){
+          variant.available = false;
+        }
+      })
+    })
+  }
   const selectedVariant = this.selectedVariant;
   if (!selectedVariant) {
     return;

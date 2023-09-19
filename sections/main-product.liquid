@@ -172,6 +172,10 @@ quick buy information in a template, that will be extracted in JS, which ensures
   }
 </script>
 
+<script type="application/json" id="VariantsInventoryData" data-product>
+[{%- for variant in product.variants -%}{"id":{{variant.id | json}},"inventory_quantity":{{variant.inventory_quantity | json}},"inventory_policy":{{variant.inventory_policy | json}}}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]
+</script>
+ 
 {% schema %}
 {
   "name": "t:sections.main_product.name",
